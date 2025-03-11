@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Friends Sudoku</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="playerNameModal" class="modal">
+            <div class="modal-content">
+                <h2>Welcome to Animal Friends!</h2>
+                <p>What's your name?</p>
+                <input type="text" id="playerNameInput" maxlength="20" placeholder="Enter your name">
+                <button id="startGameBtn">Start Playing!</button>
+            </div>
+        </div>
+        
+        <h1>Animal Friends Sudoku</h1>
+        <div class="game-info">
+            <div class="player-info">
+                <span>Player: </span><span id="currentPlayer"></span>
+            </div>
+            <div class="lives-container">
+                <span>Lives: </span>
+                <div id="livesDisplay">
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                    <span class="heart">❤️</span>
+                </div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <button id="easyMode">Easy</button>
+            <button id="mediumMode">Medium</button>
+            <button id="hardMode">Hard</button>
+        </div>
+        <div class="game-board">
+            <div id="sudokuGrid"></div>
+        </div>
+        <div class="animal-selection">
+            <div class="animal" data-animal="cat" draggable="true">🐱</div>
+            <div class="animal" data-animal="dog" draggable="true">🐶</div>
+            <div class="animal" data-animal="bird" draggable="true">🐦</div>
+        </div>
+        
+        <div class="leaderboard">
+            <h2>Top Players 🏆</h2>
+            <div class="leaderboard-filters">
+                <button id="easyLeaderboard" class="active">Easy</button>
+                <button id="mediumLeaderboard">Medium</button>
+                <button id="hardLeaderboard">Hard</button>
+            </div>
+            <div id="leaderboardList"></div>
+        </div>
+    </div>
+    <audio id="correctSound" src="correct.mp3"></audio>
+    <audio id="incorrectSound" src="incorrect.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
