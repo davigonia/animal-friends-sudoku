@@ -7,6 +7,10 @@ class SudokuGame {
             medium: ['🐦', '🌸', '🐠', '🐢'],
             hard: ['🐦', '🌸', '🐠', '🐢', '🐼']
         };
+        // CRITICAL: Define the number of pre-placed animals for each difficulty level
+        // This is referenced throughout the code to ensure consistency
+        this.initialCounts = { 'easy': 3, 'medium': 4, 'hard': 5 };
+        
         this.selectedAnimal = null;
         this.board = [];
         this.solution = [];
@@ -16,6 +20,12 @@ class SudokuGame {
         this.startTime = null;
         this.bestTimes = this.loadBestTimes();
         this.tutorialPausedTimer = false;
+        
+        // Force a version check to prevent caching issues
+        this.version = '1.0.2';
+        console.log(`Animal Friends Sudoku v${this.version} loaded`);
+        console.log(`Pre-placed animals: Easy=${this.initialCounts.easy}, Medium=${this.initialCounts.medium}, Hard=${this.initialCounts.hard}`);
+        
         this.init();
     }
 
@@ -129,10 +139,9 @@ class SudokuGame {
             }
         }
         
-        // Define the exact number of pre-placed animals for each difficulty level
-        const initialCounts = { 'easy': 3, 'medium': 4, 'hard': 5 };
-        // Ensure we're using the correct count for the current mode
-        const initialCount = initialCounts[this.currentMode];
+        // Use the class-level initialCounts property defined in the constructor
+        // This ensures consistency across the entire application
+        const initialCount = this.initialCounts[this.currentMode];
         console.log(`Generating ${this.currentMode} mode with ${initialCount} pre-placed animals`);
         
         // Shuffle positions for random placement
