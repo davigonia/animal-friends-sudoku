@@ -121,7 +121,7 @@ class SudokuGame {
         // Initialize empty board
         this.board = Array(size).fill().map(() => Array(size).fill(null));
         
-        // Place exactly 3 initial animals that follow Sudoku rules
+        // Place initial animals that follow Sudoku rules (3 for easy, 4 for medium, 5 for hard)
         const positions = [];
         for (let i = 0; i < size; i++) {
             for (let j = 0; j < size; j++) {
@@ -129,20 +129,65 @@ class SudokuGame {
             }
         }
         
-        // Shuffle positions and place 3 random animals
+        // Define the exact number of pre-placed animals for each difficulty level
+        const initialCounts = { 'easy': 3, 'medium': 4, 'hard': 5 };
+        // Ensure we're using the correct count for the current mode
+        const initialCount = initialCounts[this.currentMode];
+        console.log(`Generating ${this.currentMode} mode with ${initialCount} pre-placed animals`);
+        
+        // Shuffle positions for random placement
         positions.sort(() => Math.random() - 0.5);
-        const initialCounts = { 'easy': 3, 'medium': 4, 'hard': 5 }; const initialCount = initialCounts[this.currentMode];
+        
+        // Reset counters
         let placed = 0;
         let index = 0;
+        let maxAttempts = positions.length * 2; // Prevent infinite loops
+        let attempts = 0;
         
-        while (placed < initialCount && index < positions.length) {
+        // Place animals until we reach the required count or run out of valid positions
+        while (placed < initialCount && index < positions.length && attempts < maxAttempts) {
             const [row, col] = positions[index];
             // Only place if it doesn't conflict with other placed animals
             if (isValid(this.board, row, col, this.solution[row][col])) {
                 this.board[row][col] = this.solution[row][col];
                 placed++;
+                console.log(`Placed animal ${placed}/${initialCount} at position [${row},${col}]`);
             }
             index++;
+            attempts++;
+            
+            // If we've gone through all positions but haven't placed enough animals, reshuffle and try again
+            if (index >= positions.length && placed < initialCount && attempts < maxAttempts) {
+                index = 0;
+                positions.sort(() => Math.random() - 0.5);
+            }
+        }
+        
+        // Verify the correct number of animals were placed
+        let actualPlaced = 0;
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
+                if (this.board[i][j] !== null) {
+                    actualPlaced++;
+                }
+            }
+        }
+        console.log(`Actually placed ${actualPlaced}/${initialCount} animals in ${this.currentMode} mode`);
+        
+        // Force the correct number if somehow we didn't place enough
+        if (actualPlaced < initialCount) {
+            console.warn(`Failed to place enough animals (${actualPlaced}/${initialCount}). Forcing placement...`);
+            let forcePlaced = actualPlaced;
+            
+            // Try one more time with a different approach
+            for (let i = 0; i < size && forcePlaced < initialCount; i++) {
+                for (let j = 0; j < size && forcePlaced < initialCount; j++) {
+                    if (this.board[i][j] === null && isValid(this.board, i, j, this.solution[i][j])) {
+                        this.board[i][j] = this.solution[i][j];
+                        forcePlaced++;
+                    }
+                }
+            }
         }
     }
 
