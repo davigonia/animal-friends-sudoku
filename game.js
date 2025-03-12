@@ -131,7 +131,7 @@ class SudokuGame {
         
         // Shuffle positions and place 3 random animals
         positions.sort(() => Math.random() - 0.5);
-        const initialCount = 3;
+        const initialCounts = { 'easy': 3, 'medium': 4, 'hard': 5 }; const initialCount = initialCounts[this.currentMode];
         let placed = 0;
         let index = 0;
         
@@ -202,6 +202,11 @@ class SudokuGame {
                     const cell = document.querySelector(`[data-row="${hint.row}"][data-col="${hint.col}"]`);
                     cell.textContent = correctAnimal;
                     cell.classList.add('correct', 'fixed', 'hint-reveal');
+                    
+                    // Make the green color temporary (1 second)
+                    setTimeout(() => {
+                        cell.classList.remove('correct');
+                    }, 1000);
                     
                     // Update hint counter
                     this.hintsLeft--;
@@ -304,6 +309,13 @@ class SudokuGame {
         if (this.selectedAnimal === this.solution[row][col]) {
             cell.classList.add('correct');
             this.showFeedback('Perfect match! 🎉', true);
+            
+            // Make the green color temporary (1 second)
+            setTimeout(() => {
+                if (!this.checkWin()) { // Only remove if game isn't won yet
+                    cell.classList.remove('correct');
+                }
+            }, 1000);
             
             // Check if game is won
             if (this.checkWin()) {
@@ -423,3 +435,4 @@ class SudokuGame {
 
 // Start the game
 new SudokuGame();
+
