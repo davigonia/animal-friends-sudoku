@@ -11,7 +11,7 @@
 body {
     margin: 0;
     padding: 20px;
-    font-family: 'Comic Sans MS', cursive;
+    font-family: 'Arial', 'Helvetica', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
@@ -122,6 +122,9 @@ h1 {
 .game-board[data-mode="hard"] {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
+    width: min(500px, 90vw);
+    padding: 25px;
+    box-sizing: border-box;
 }
 
 .cell {
@@ -131,7 +134,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-size: clamp(2.2rem, 5vw, 3rem);
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
     padding: 5px;
@@ -169,7 +172,7 @@ h1 {
 }
 
 .animal-option {
-    font-size: 2rem;
+    font-size: 2.8rem;
     padding: 10px;
     border-radius: 15px;
     cursor: pointer;
@@ -400,7 +403,7 @@ h1 {
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 2.8rem;
     }
 
     .mode-btn, .controls button {
@@ -458,3 +461,15 @@ h1 {
         font-size: 1rem;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
